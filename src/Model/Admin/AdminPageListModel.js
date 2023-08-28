@@ -14,7 +14,8 @@ const AdminPageListModel = {
             connection.query(data, function (error, result) {
                 console.log(result, 'nayan')
                 if (!error) {
-                    res.send(result,'nayan')
+                //   return  res.send(result,'nayan')
+                res.status(403).send(result)
                 }
 
                 else {

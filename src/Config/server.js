@@ -7,7 +7,7 @@ const cors = require('cors')
 const bodyParsar = require("body-parser")
 app.use(cors())
 app.use(bodyParsar.json())
-app.use(express.urlencoded({extended: false}))
+// app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
 
@@ -15,9 +15,8 @@ app.use(express.json())
 
 const AdminPageListModel = require('../Model/Admin/AdminPageListModel')
 
-console.log(AdminPageListModel)
-
-// app.get('/nayan', AdminPageListModel.AdminPageListAll)
+console.log(AdminPageListModel.AdminPageListAll)
+app.get('/', AdminPageListModel.AdminPageListAll)
 
 
 app.get('/', async(req, res) => {

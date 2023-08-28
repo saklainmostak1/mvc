@@ -3,7 +3,17 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { HiTrash, HiEye, HiPencilAlt } from "react-icons/hi";
-// const AdminPageListModel = require('../../../Model/Admin/AdminPageListModel')
+
+import AdminPageListModel from '../../../Model/Admin/AdminPageListModel'
+
+const express = require('express')
+const app = express()
+require('dotenv').config()
+const cors = require('cors')
+const bodyParsar = require("body-parser")
+app.use(cors())
+app.use(bodyParsar.json())
+app.use(express.json())
 
 
 const AdminPageListView = () => {
@@ -12,12 +22,13 @@ const AdminPageListView = () => {
     const [postsPerPage, setPostsPerPage] = useState(10)
 
    
-    const { data: Admin_page_list_all = [], isLoading, refetch
+    const { data: AdminPageListAlls = [], isLoading, refetch
     } = useQuery({
-        queryKey: ['Admin_page_list_all'],
+        queryKey: ['AdminPageListAlls'],
         queryFn: async () => {
-            const res = await fetch()
-            // const res = await router.get('/all-admin', AdminPageListModel.AdminPageListAll)
+            // const res = await fetch ()
+            const datas = app.get('/all-admin', AdminPageListModel.AdminPageListAll)
+            const res = await fetch(datas)
             // AdminPageListModel.AdminPageListAll
             console.log(res)
             const data = await res.json()
@@ -25,13 +36,13 @@ const AdminPageListView = () => {
         }
     })
 
-    console.log(Admin_page_list_all)
+    console.log(AdminPageListAlls)
 
     const lastPostIndex = currentPage * postsPerPage
     const firstPosIndex = lastPostIndex - postsPerPage
-    const allAdminsPageList = Admin_page_list_all?.slice(firstPosIndex, lastPostIndex)
+    const allAdminsPageList = AdminPageListAlls?.slice(firstPosIndex, lastPostIndex)
 
-    let totalPosts = Admin_page_list_all.length
+    let totalPosts = AdminPageListAlls.length
     let pages = []
 
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
